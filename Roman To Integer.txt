@@ -1,0 +1,72 @@
+int Solution::romanToInt(string A) {
+    int count=0;
+    int ans=0;
+    while(count<A.size())
+    {
+        switch(A[count])
+        {
+            case 'M':
+                ans+=1000;
+                count++;
+                break;
+            
+            case 'D':
+                ans+=500;
+                count++;
+                break;
+            
+            case 'L':
+                ans+=50;
+                count++;
+                break;
+            
+            case 'V':
+                ans+=5;
+                count++;
+                break;
+            
+            case 'C':
+                if(A[count+1]=='D' || A[count+1]=='M')
+                {
+                    A[count+1]=='D' ? ans+=400 : ans+=900;
+                    count+=2;
+                }
+                else
+                {
+                    ans+=100;
+                    count++;
+                }
+                break;
+            
+            case 'X':
+                if(A[count+1]=='L' || A[count+1]=='C')
+                {
+                    A[count+1]=='L' ? ans+=40 : ans+=90;
+                    count+=2;
+                }
+                else
+                {
+                    ans+=10;
+                    count++;
+                }
+                break;
+            
+            case 'I':
+                if(A[count+1]=='V' || A[count+1]=='X')
+                {
+                    A[count+1]=='V' ? ans+=4 : ans+=9;
+                    count+=2;
+                }
+                else
+                {
+                    ans+=1;
+                    count++;
+                }
+                break;
+            
+            default:
+                count++;
+        }
+    }
+    return ans;
+}

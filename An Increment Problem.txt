@@ -1,0 +1,15 @@
+vector<int> Solution::solve(vector<int> &A) {
+    
+    unordered_map<int,int> mp;
+    for(int i=0;i<A.size();i++){
+        if(mp.find(A[i]) != mp.end()){
+            //If found then increment the value at found index
+            A[mp[A[i]]]++;
+            // And update the index of incremented value to 1st occurence(1st found value)
+            mp[A[mp[A[i]]]]=mp[A[i]];
+        }
+        // *** current index will be 1st occurence of that value in any case
+        mp[A[i]]=i;
+    }
+    return A;
+}

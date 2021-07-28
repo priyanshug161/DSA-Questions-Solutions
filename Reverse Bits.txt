@@ -1,0 +1,24 @@
+unsigned int Solution::reverse(unsigned int A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+unsigned int ans=0;
+int i =31;
+
+while(A>0){
+    //If rightmost bit is 1 then add the number with leftmost bit 1 to the answer
+    //Similarly if 2nd from right is 1 then add number having 2nd set bit from left to the ans...and so on
+    int r = A%2; 
+    if(r!=0)
+        ans +=pow(2,i);
+        
+        
+    A /=2; //shifting all bits right by 1 position
+    i--;
+}
+
+return ans;
+}
+    
+

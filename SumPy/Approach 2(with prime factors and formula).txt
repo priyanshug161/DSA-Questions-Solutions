@@ -1,0 +1,82 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+map<int,int> primefactorization(int n){
+    map<int, int> primefactors;
+    if(n%2==0){               // if n is even first take care of all 2 factors
+        primefactors[2]=0;
+        while(n%2==0){
+            primefactors[2]++;
+            n=n/2;
+        }
+    }
+    
+    // at this pt n is odd
+    for(int i=3; i<=sqrt(n); i+=2 ){     // so * i+=2 * only need to check odd numbers now so skipping 1 element
+        if(n%i==0){
+            int count=0;
+            while(n%i==0){
+                n=n/i;
+                count++;
+            }
+            primefactors[i]=count;
+
+        }
+    }
+
+    if(n!=1){                   
+        primefactors[n]=1;
+    }
+
+    return primefactors;
+}
+
+int sumfacs(int n){
+    map<int,int> primefactors=primefactorization(n);
+    int sum=1;
+    int prime;
+    int primecount;
+    for(auto it=primefactors.begin(); it!=primefactors.end(); it++){
+        prime=it->first;
+        primecount=it->second;
+        int numer= (int)(pow(prime, primecount+1) + 0.5)  -1;    
+        int deno= (prime-1);
+        sum*= (numer/deno);
+
+    }
+    
+    return sum;
+
+}
+
+int main(){
+    map<int, int> arr;
+    int t;
+    cin>>t;
+
+    while(t--){
+        int l;
+        int r;
+
+        cin>>l>>r;
+        
+        int sumofall=0;
+        for(int i=l; i<=r; i++){
+            if(arr[i])
+            {
+                sumofall+=arr[i];
+            }
+            else
+            {
+                arr[i]=sumfacs(i);
+              sumofall+=arr[i];  
+            }
+            
+        }
+
+        cout<<sumofall<<endl;       
+        
+    }
+    
+    return 0;
+}

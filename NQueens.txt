@@ -1,0 +1,63 @@
+
+bool can_place(int x,int y, int n, vector<string> &av_pos){
+    
+    if(x==0) return true;
+    
+    for(int j=x-1;j>=0;j--)
+    {
+        string str=av_pos[j];
+        if((y-(x-j))>=0)
+        {
+            if(str[(y-(x-j))]=='Q')
+            {
+                return false;
+            }
+        }
+        if((y+(x-j))<n)
+        {
+            if(str[(y+(x-j))]=='Q')
+            {
+                return false;
+            }
+        }
+        if(str[y]=='Q')
+        {
+           return false; 
+        }
+    }
+    
+    return true;
+}
+
+void place_queen(int n, int row, vector<string> &av_pos, vector<vector<string>> &ans){
+    if(row==(n))
+    {
+        ans.push_back(av_pos);
+        return;
+    }
+    
+    for(int col=0;col<n;col++)
+    {
+        string curr(n,'.');
+        
+        if(can_place(row,col,n,av_pos))
+        {
+            curr[col]='Q';
+            
+            av_pos.push_back(curr);
+            
+            place_queen(n, row+1, av_pos, ans);
+            
+            av_pos.pop_back();
+        }
+    }
+    return;
+}
+
+vector<vector<string> > Solution::solveNQueens(int A) {
+   vector<string> av_pos;
+    vector<vector<string>> ans;
+   int n=A;
+   place_queen(n, 0, av_pos, ans);
+   return ans;
+}

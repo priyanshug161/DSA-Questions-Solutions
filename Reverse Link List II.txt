@@ -1,0 +1,35 @@
+ListNode* Solution::reverseBetween(ListNode* A, int B, int C) {
+    if(B == C) return A;
+    int count = 0;
+    ListNode* curr = A, *left = NULL, *start = NULL;
+    while(count<=B && curr){
+        count++;
+        if(count == B-1) left = curr;
+        if(count == B) start = curr;
+        curr = curr->next;
+    }
+
+    count--;
+    
+    curr = start;
+    ListNode* prev = NULL, *next = NULL;
+    
+    while(count <= C){
+        next = curr->next;
+        curr->next = prev;  //reversing the arrow (main step)
+        prev = curr;
+        curr = next;
+        count++;
+    }
+    
+    //joining the mth node to the (n+1)th node
+    start->next = curr;
+    
+    //Joining (m-1)th node to nth node
+    if(left){
+        left->next = prev;
+        return A;
+    }
+    
+    if(!left) return prev;
+}

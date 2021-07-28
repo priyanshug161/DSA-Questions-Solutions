@@ -1,0 +1,23 @@
+vector<int> Solution::slidingMaximum(const vector<int> &A, int B) {
+    int n = A.size();
+            vector<int> C;
+            if (n < B) return C;
+            C.resize(n - B + 1);
+            deque<int> Q;
+            // Q is only storing indices
+            for (int i = 0; i < B; i++) {
+                while (!Q.empty() && A[i] >= A[Q.back()]) //Pop from back until we get a number greater than A[i] in queue
+                    Q.pop_back();
+                Q.push_back(i); //We have stored indices in Q such that elements are stored in decreasing order
+            }
+            for (int i = B; i < n; i++) {
+                C[i - B] = A[Q.front()];
+                while (!Q.empty() && A[i] >= A[Q.back()])
+                    Q.pop_back();
+                while (!Q.empty() && Q.front() <= i - B) //Popping elements from front that are out of the window
+                    Q.pop_front();
+                Q.push_back(i);
+            }
+            C[n - B] = A[Q.front()];
+            return C;
+}

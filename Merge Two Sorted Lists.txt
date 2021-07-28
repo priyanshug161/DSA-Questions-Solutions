@@ -1,0 +1,19 @@
+ListNode* Solution::mergeTwoLists(ListNode* A, ListNode* B) {
+    ListNode* ans;
+    if(A==NULL)
+        return B;
+    if(B==NULL)
+        return A;
+    
+    if(A->val >= B->val){
+        ans=B;
+        ans->next= mergeTwoLists(A,B->next);
+    }
+    else
+    {
+        ans=A;
+        ans->next=mergeTwoLists(A->next,B);
+    }
+    
+    return ans;
+    }

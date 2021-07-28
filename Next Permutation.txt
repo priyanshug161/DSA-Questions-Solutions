@@ -1,0 +1,40 @@
+vector<int> Solution::nextPermutation(vector<int> &A) {
+    int ind1=0;
+    for(int i=A.size()-1;i>0;i--)
+    {
+        if(A[i-1]<A[i]){
+            ind1=i-1;
+            break;
+        }
+    }
+    
+    int ind_min=ind1;
+    int flag=0;
+    
+    for(int j=A.size()-1;j>ind1;j--)
+    {
+        if(A[j]>A[ind1])
+        {
+            ind_min=j;
+            flag=1;
+            break;
+        }
+    }
+    for(int j=ind_min;j>ind1;j--)
+    {
+        if(A[j]>A[ind1] && A[j]<A[ind_min])
+        {
+            ind_min=j;
+        }
+    }
+    
+    
+    swap(A[ind_min],A[ind1]);
+    if(flag==1){
+    sort(A.begin()+ind1+1,A.end());
+    }
+    else if(flag==0){
+    sort(A.begin(),A.end());
+    }
+    return A;
+}

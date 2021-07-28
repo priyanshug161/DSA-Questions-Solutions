@@ -1,0 +1,26 @@
+int Solution::hammingDistance(const vector<int> &A) {
+    long res = 0;
+
+for(int i = 0; i< 32;i++) {
+    long counton = 0;
+    
+    for(int val : A)
+    {
+        //bitwise and check starting from last binary digit
+        if((val & (1<<i)) != 0)
+        {
+            //checking number of 1s at ith index of each value
+            counton++;
+        }
+    }
+    
+    long countoff = A.size() - counton;
+    //total pairs=1s*0s*2
+    long diff = counton * countoff *2;
+    
+    res+= diff;
+}
+
+return res % 1000000007;
+
+}

@@ -1,0 +1,28 @@
+bool Solution::hotel(vector<int> &arrive, vector<int> &depart, int K) {
+    sort(arrive.begin(),arrive.end());
+    sort(depart.begin(),depart.end());
+    int count=1;
+    int n=arrive.size();
+    int i=1;
+    int j=0;
+    while(i<n)
+    {
+        if(arrive[i]<depart[j]) //One person arrived and nobody left
+        {
+            count++;
+            i++;
+        }
+        else //One arrived and one left
+        {
+            i++;
+            j++;
+        }
+       
+    }
+    if(count<=K){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}

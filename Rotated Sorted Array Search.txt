@@ -1,0 +1,51 @@
+int Solution::search(const vector<int> &A, int B) 
+{
+    int n = A.size();
+    int start = 0 , end = n-1 , mid=(start+end)/2;
+ 
+    //Check if the start or mid or last are == B and return if true 
+    if( A[mid]==B ) return mid;
+    if( A[start]==B ) return start;
+    if( A[end]==B ) return end;
+ 
+    /*
+    Loop till the value of mid == start
+    i.e: when start and end are adjacent 
+    eg. (32+33)/2 => 32 ie mid=start....
+    */
+    while(mid!=start) 
+    {
+        mid = (start+end)/2;
+ 
+        if(A[mid] > A[start]) // means left of mid is sorted
+        {
+            if( B<A[mid]  && B>A[start] )
+            {
+                end = mid-1 ; // Move to left
+            }
+            else
+            {
+                start = mid+1 ; // Move to right
+            }
+        }
+        else // right of mid is sorted
+        {
+            if( B>A[mid]  && B<A[end] )
+            {
+                start = mid+1 ; // Move to right
+            }
+            else
+            {
+                end = mid-1 ; // Move to left
+            }
+        }
+ 
+        // At each step check every value if it's == B
+        if( A[mid]==B ) return mid;
+        if( A[start]==B ) return start;
+        if( A[end]==B ) return end;
+    }
+ 
+    // If element not fount=d return -1 
+    return -1;
+}

@@ -1,0 +1,22 @@
+int Solution::gcd(int A, int B) {
+    
+    int n=min(A,B);
+    int gcd=1;
+    while(n>1)
+    {
+        if((A%n)==0 && (B%n==0)){
+            gcd=n;
+            break;
+        }
+        n--;
+    }
+    
+    if(A==0 || B==0)
+    {
+        return max(A,B);
+    }
+    else
+    {
+        return gcd;
+    }
+}

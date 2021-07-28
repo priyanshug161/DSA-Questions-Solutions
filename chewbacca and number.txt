@@ -1,0 +1,30 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */  
+    long int n;
+    cin>>n;
+    int val=0;
+    long int ans=0;
+    int count=0;
+    
+    while(n>0)
+    {
+        val=n%10;
+        n=n/10;
+        if(val>=5)
+            val=9-val;
+        ans=ans+val*pow(10,count);
+     
+        count=count+1;
+        //cout<<ans;
+        
+    }
+    cout<<ans;
+}

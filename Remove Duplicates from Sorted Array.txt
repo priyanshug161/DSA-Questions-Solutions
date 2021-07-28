@@ -1,0 +1,27 @@
+int Solution::removeDuplicates(vector<int> &A) {
+    int i=0,j=1;
+    int length=1;
+    if(A.size()==1)
+    {
+        return length;
+    }
+
+    while(j<A.size())
+    {
+        if(A[i]==A[j] )
+        {
+            j++;
+        }
+        else
+        {
+            A[length]=A[j];
+            length++;
+            i=j;
+            j++;
+        }
+
+    }
+    A.resize(length);
+    return length;
+
+}

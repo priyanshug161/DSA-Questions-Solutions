@@ -1,0 +1,37 @@
+vector<int> Solution::plusOne(vector<int> &A) {
+    vector<int> B;
+    int flag=0;
+    int count=0;
+    for(int i=0;i<A.size();i++)
+    {
+        if(A[i]!=0){
+            flag=1;
+        }
+        if(A[i]==0 && flag==0){
+            count++;
+            continue;
+        }
+        B.push_back(A[i]);
+    }
+    if (count==A.size()){
+        B.push_back(0);
+    }
+    reverse(B.begin(),B.end());
+    
+    int carry=1;
+    for(int j=0;j<B.size();j++){
+        if(B[j]+carry>9){
+            B[j]=0;
+            carry=1;
+        }
+        else{
+            B[j]=B[j]+carry;
+            carry=0;
+        }
+    }
+    if(carry==1){
+        B.push_back(1);
+    }
+    reverse(B.begin(),B.end());
+    return B;
+}

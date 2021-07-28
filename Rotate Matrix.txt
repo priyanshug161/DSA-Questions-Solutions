@@ -1,0 +1,26 @@
+void Solution::rotate(vector<vector<int> > &A) {
+    for (int i=0;i<A.size();i++)
+    {
+        for (int j=0;j<i;j++)
+        {
+            swap(A[i][j],A[j][i]);
+        }
+    }
+    int x;
+    if(A.size()%2==0)
+    {
+        x=(A.size()/2);
+    }
+    else
+    {
+        x=((A.size()-1)/2);
+    }
+    for (int l=0;l<A.size();l++)
+    {
+        for (int m=0;m<x;m++)
+        {
+            swap(A[l][m],A[l][A.size()-m-1]);
+        }
+    }
+   
+}

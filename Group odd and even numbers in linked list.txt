@@ -1,0 +1,41 @@
+ListNode* p=A, *start=NULL, *e_start=NULL;
+    
+    //Odd start
+    while(p!=NULL){
+        if(((p->val)%2==1)){
+                start=p;
+                break;
+            }
+            p=p->next;
+    }
+    
+    //Even Start
+    ListNode* q=A;
+    while(q!=NULL){
+        if(((q->val)%2==0)){
+                e_start=q;
+                break;
+            }
+            q=q->next;
+    }
+        
+    ListNode* temp=A;
+    p=start;
+    q=e_start;
+    
+    while(temp!=NULL){
+        if(((temp->val)%2==1) && temp!=start && temp!=e_start)
+        {
+            p->next=temp;
+            p=p->next;             
+        }
+        else if(((temp->val)%2==0) && temp!=e_start)
+        {
+            q->next=temp;
+            q=q->next;
+        }
+        temp=temp->next;    
+    }
+    p->next=e_start;
+    
+    return start;

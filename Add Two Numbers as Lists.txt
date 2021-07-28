@@ -1,0 +1,19 @@
+ListNode* Solution::addTwoNumbers(ListNode* A, ListNode* B) {
+    ListNode* head=NULL, *tail=NULL;
+    int c=0; //carry
+    while(A or B or c)
+    {
+        int v1=0,v2=0;
+        if(A) v1=A->val, A=A->next;
+        if(B) v2=B->val, B=B->next;
+        c=(c+v1+v2);
+        ListNode* tmp=new ListNode(c%10);
+        
+        if(!head) head=tmp, tail=tmp;
+        else tail->next=tmp, tail=tail->next;
+        
+        c/=10;
+     
+    }
+    return head;
+}

@@ -1,0 +1,13 @@
+ListNode* Solution::solve(ListNode* A) {
+    ListNode *p=A,*q=A;
+    while(p!=NULL){
+        if(p->val==0){
+                int t=p->val;
+                p->val=q->val;
+                q->val=t;
+                q=q->next;
+            }
+            p=p->next;
+        }
+    return A;
+}

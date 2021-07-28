@@ -1,0 +1,27 @@
+int Solution::strStr(const string A, const string B) {
+    int ans=-1;
+    if(B.size()>A.size() || B.size()==0)
+    {
+        return ans;
+    }
+    for(int i=0; i<=A.size()-B.size()+1; i++)
+    {
+        if(A[i]==B[0])
+        {
+            ans=i;
+            for(int j=1;j<B.size();j++)
+            {
+                if(A[j+i]!=B[j])
+                {
+                    ans=-1;
+                    break;
+                }
+                if(j==(B.size()-1))
+                {
+                    return ans;
+                }
+            }
+        }
+    }
+    return ans;
+}

@@ -1,0 +1,22 @@
+ListNode* Solution::mergeKLists(vector<ListNode*> &A) {
+    priority_queue<pair<int,ListNode*>,vector<pair<int,ListNode*>>,greater<pair<int,ListNode*>>>p1;
+    ListNode *newroot=new ListNode(0);
+    ListNode *head=newroot;
+    for(int i=0;i<A.size();i++)
+    {
+        p1.push({A[i]->val,A[i]});
+    }
+    while(p1.empty()==false)
+    {
+        int data=p1.top().first;
+        ListNode *nextnode=p1.top().second;
+        p1.pop();
+        newroot->next=nextnode;
+        newroot=newroot->next;
+        if(nextnode->next!=NULL){
+            nextnode=nextnode->next;
+            p1.push({nextnode->val,nextnode});
+        }
+    }
+    return head->next;
+}

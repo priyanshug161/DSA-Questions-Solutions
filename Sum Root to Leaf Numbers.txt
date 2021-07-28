@@ -1,0 +1,21 @@
+void travel(TreeNode* A,int sum,int &ans){
+     
+    //Notice that sum is local variable of this function but ans is taken as refrence  
+    if(A==NULL) return;
+    
+    sum=(sum*10+(A->val))%1003;
+    
+    if(A->left==NULL && A->right==NULL) 
+    {
+        ans=(ans+sum)%1003; 
+        return;
+    }
+    
+    travel(A->left,sum,ans);
+    travel(A->right,sum,ans);
+}
+int Solution::sumNumbers(TreeNode* A) {
+    int sum=0,ans=0;
+    travel(A,sum,ans);
+    return ans%1003;
+}

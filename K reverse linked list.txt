@@ -1,0 +1,19 @@
+ListNode* Solution::reverseList(ListNode* A, int B) {
+    int count=0;
+    ListNode* curr=A, *prev=NULL, *next=NULL, *start=NULL;
+    start=curr;
+    while(count<B)
+    {
+        count++;
+        next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+    }
+    
+    //We used recursion here
+    if(curr!=NULL)
+        start->next = reverseList(curr,B);
+        
+    return prev;
+}

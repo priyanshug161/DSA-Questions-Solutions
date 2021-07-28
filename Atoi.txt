@@ -1,0 +1,17 @@
+int Solution::atoi(const string A) {
+    
+    long long int number = 0;
+     int sign=1,start=0;
+     if(A[0]=='-')sign=-1;
+     if(A[0]=='-' || A[0]=='+')start=1;
+     while(start<A.size())
+     {
+         if(A[start]<'0' || A[start]>'9')break;
+         number = number*10 + A[start]-48;
+         if(number>INT_MAX){
+             return (sign==1)?INT_MAX:INT_MIN;
+         }
+         start++;
+     }
+    return (sign==1)?number:(-number);
+}

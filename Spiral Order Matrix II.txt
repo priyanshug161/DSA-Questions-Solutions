@@ -1,0 +1,72 @@
+vector<vector<int> > Solution::generateMatrix(int A) {
+    vector<vector <int>> B(A,vector<int>(A,0));
+    int i,j=0;
+    int num=1;
+    int end=A*A;
+    
+    while(j<A){    //1st Row
+        B[i][j]=num;
+        j++;
+        num++;
+    }
+    
+    i++;
+    j--;
+    int mark=1;
+    int stop=A-1;
+    while(num<=end)
+    {
+        while(mark<=stop) //Down
+        {
+         B[i][j]=num;
+         num++;
+         i++;
+         mark++;
+        }
+        
+        i--;
+        j--;
+        mark=1;
+        
+        while(mark<=stop) //Left
+        {
+         B[i][j]=num;
+         num++;
+         j--;
+         mark++;
+        }
+        
+        j++;
+        i--;
+        stop--;
+        mark=1;
+        
+        while(mark<=stop) //up
+        {
+         B[i][j]=num;
+         num++;
+         i--;
+         mark++;
+        }
+        
+        j++;
+        i++;
+        mark=1;
+        
+        while(mark<=stop) //right
+        {
+         B[i][j]=num;
+         num++;
+         j++;
+         mark++;
+        }
+        
+        j--;
+        i++;
+        stop--;
+        mark=1;
+        
+    }
+    
+    return B;
+}

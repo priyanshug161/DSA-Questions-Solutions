@@ -1,0 +1,25 @@
+int Solution::solve(vector<int> &A, int B) {
+int i=0,n=A.size();
+
+int count=0;
+while(i<n)
+{
+    int j=min(i+B-1,n-1);
+    bool found=false;
+    while(j>=i-B+1 && j>=0 && j<n)
+    {
+        if(A[j]==1)
+        {
+            found=true;
+            i=j+B;
+            count++;
+            break;
+        }
+        j--;
+        
+    }
+    if(!found)
+    return -1;
+}
+return count;
+}

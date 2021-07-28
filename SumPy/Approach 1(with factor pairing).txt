@@ -1,0 +1,73 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    int t;
+    map<int, int> arr;
+    cin>>t;
+    
+    for(int j=0;j<t;j++)
+    {
+        int res=0;
+        int l;
+        int f;
+        cin>>f;
+        cin>>l;
+        while(f<=l)
+        {
+            if(arr[l]) //If found in map then add sum of divisors of l in res
+            {
+                res=res+arr[l];
+               
+            }
+            else //If not found in map then find sum of divisors of l and store in arr also add in res
+            {
+                int temp=0;
+                if(l%2==1)
+                {
+                   for(int x=1;(x*x)<=(l);x+=2)
+                    {
+                        if(l%x==0)
+                        {
+                            if((x*x)==l)
+                            {
+                               temp=temp+x;
+                            }
+                            else
+                            {
+                               temp=temp+x+(l/x); 
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                   for(int x=1;(x*x)<=(l);x++)
+                    {
+                        if(l%x==0)
+                        {
+                            if((x*x)==l)
+                            {
+                               temp=temp+x; 
+                            }
+                            else
+                            {
+                               temp=temp+x+(l/x); 
+                            }
+                        }
+                    }
+                }
+                arr[l]=temp;
+                res=res+temp;
+            }
+            
+            l--;
+        }
+        cout<<res<<endl;
+    }
+    
+    
+    return 0;
+}
