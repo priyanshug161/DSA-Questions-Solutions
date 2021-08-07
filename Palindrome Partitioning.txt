@@ -1,0 +1,46 @@
+bool isPalindrome(string S)
+{
+    string P = S;
+    reverse(P.begin(), P.end());
+    
+    if (S == P) {
+        return true;
+    }
+    else {
+       return false;
+    }
+}
+
+void do_partition(string str,vector<string> curr, vector<vector<string>> &ans){
+    
+    if(str.size()==0)
+    {
+        ans.push_back(curr);
+        return;
+    }
+    
+    if(str.size()==1)
+    {
+        curr.push_back(str);
+        ans.push_back(curr);
+        return;
+    }
+    
+    for(int i=1; i<=str.size();i++)
+    {
+        string temp=str.substr(0,i);
+        if(isPalindrome(temp))
+        {
+            curr.push_back(temp);
+            do_partition(str.substr(i), curr, ans);
+            curr.pop_back();
+        }
+    }
+    
+}
+
+vector<vector<string> > Solution::partition(string A) {
+    vector<vector<string>> ans;
+    do_partition(A, {}, ans);
+    return ans;
+}

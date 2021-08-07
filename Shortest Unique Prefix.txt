@@ -1,0 +1,47 @@
+struct Trie{
+    int count=0; // represents count of words till this prefix
+    Trie* pt[26]={NULL}; //every element stores a pointer to trie
+};
+
+vector<string> Solution::prefix(vector<string> &A) {
+    Trie* root= new Trie();
+    
+    for(int i=0; i<A.size(); i++){
+        Trie* temp=root;
+        for(int j=0; j<A[i].size(); j++){
+            int idx=A[i][j]-'a';
+            if(temp->pt[idx]==NULL){
+                temp-> pt[idx]=new Trie();
+            }
+            
+            temp=temp->pt[idx];
+            temp->count=(temp->count)+1;
+        }
+    }
+    
+    vector<string> ans;
+
+    for(int i=0; i<A.size(); i++){
+        string res="";
+        Trie* temp=root;
+        for(int j=0; j<=A[i].size(); j++){ //j<= bcoz our wors starts after root node
+            int idx=A[i][j]-'a';
+            
+            if(temp->count==1){
+                ans.push_back(res);
+                break;
+            }
+            
+            else{
+                temp=temp->pt[idx];
+                res=res+A[i][j];
+            }
+            
+            
+        }
+        
+    }
+    
+    return ans;
+
+}

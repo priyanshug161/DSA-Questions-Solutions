@@ -1,0 +1,18 @@
+void generate(vector<int> &vec, int A, int curVal, bool turn = true) {
+    if (not A) {
+        vec.push_back(curVal);
+        return;
+    }
+    if (turn) {
+        generate(vec, A-1, (curVal<<1)+0, turn);
+        generate(vec, A-1, (curVal<<1)+1, !turn);
+    } else {
+        generate(vec, A-1, (curVal<<1)+1, !turn);
+        generate(vec, A-1, (curVal<<1)+0, turn);
+    }
+}
+vector<int> Solution::grayCode(int A) {
+    vector<int> vec;
+    generate(vec, A, 0);
+    return vec;
+}

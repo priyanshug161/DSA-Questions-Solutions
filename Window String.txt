@@ -1,0 +1,66 @@
+string Solution::minWindow(string A, string B) {
+    string ans;
+    if(B.length()>A.length())
+        return ans;
+    
+    //To store count of characters of T
+    unordered_map<char,int> m;
+    //To store count of characters of S
+    unordered_map<char,int> freq;
+    
+    for(auto c: B)
+        m[c]++;
+    
+    int n=B.length();
+    int max=INT_MAX;
+    int p1=0,p2=0,flag=0;
+    
+    int start=0,end=0,count=0; 
+    
+    while(end<A.size())
+    {
+        //When we get a character of T in S, add in freq_map and increase count
+        if(m.find(A[end])!=m.end())
+        {
+            freq[A[end]]++;
+            //This condition will satisfy till we find all characters of T in S
+            if(freq[A[end]]<=m[A[end]])
+                count++;
+        }
+        if(count==n)
+        {
+            flag++;
+            while(start<end)
+            {
+                //Increase start till we find a character of T
+                if(freq.find(A[start])!=freq.end())
+                {
+                    //Check if the character we found is occuring the min times we require
+                    //If not then decrease its freq and increase start
+                    if(freq[A[start]]>m[A[start]])
+                    freq[A[start]]--;
+                    else
+                    break;
+                }
+                start++;
+            }
+            //Now we have all the characters of T in the start-end window with min required count
+            //check if length of found string is smalller than prev and update accordingly
+            if(max>(end-start+1))
+            {
+                max=end-start+1;
+                p1=start;
+                p2=end;
+            }
+        }
+        end++;
+    }
+    //If no string found than return empty
+    if(flag==0)
+        return ans;
+    //If found then return the string from start to end indices
+    for(int i=p1; i<=p2; i++)
+        ans.push_back(A[i]);
+    
+    return ans;
+}
