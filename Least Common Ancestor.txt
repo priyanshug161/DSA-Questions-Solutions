@@ -1,0 +1,43 @@
+bool found(TreeNode* root, int num, vector<int> &path)
+{
+    if(root==NULL){
+        return false;
+    }
+    
+    path.push_back(root->val);
+    if(root->val==num){
+        return true;
+    }
+    
+    if(found(root->left,num,path) || found(root->right,num,path)){
+        return true;
+    }
+    
+    path.pop_back();
+    
+    return false;
+}
+
+int Solution::lca(TreeNode* A, int B, int C) 
+{
+    
+    vector<int> path1, path2;
+    
+    if(!found(A,B,path1) || !found(A,C,path2)){
+        return -1;
+    }
+    
+    int i=0,j=0;
+    while(i<path1.size() && j<path2.size())
+    {
+        if(path1[i]!=path2[j])
+        {
+            break;
+        }
+        i++;
+        j++;
+    }
+    
+    return path1[i-1];
+    
+}

@@ -1,4 +1,4 @@
-nt Solution::threeSumClosest(vector<int> &A, int B) {
+int Solution::threeSumClosest(vector<int> &A, int B) {
     vector<int> num=A;
     int target=B;
     sort(num.begin(), num.end());

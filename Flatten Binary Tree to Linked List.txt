@@ -1,0 +1,40 @@
+// Function to find the rightmost node of any subtree taking its root as parameter
+TreeNode* rightmost_node(TreeNode* temp){
+    
+    while(temp->left!=NULL || temp->right!=NULL)
+    {
+        if(temp->right!=NULL)
+            temp=temp->right;
+        else
+            temp=temp->left;
+        
+    }
+    
+    return temp;
+} 
+ 
+TreeNode* Solution::flatten(TreeNode* A) {
+    
+    TreeNode* head=A;
+    TreeNode* root=head;
+    
+    while(root->left!=NULL || root->right!=NULL){
+        
+        TreeNode* leftnode=root->left;
+        TreeNode* rightnode=root->right;
+        
+        if(leftnode){
+            //connect the rightmost element of left subtreee to the rightnode
+            if(rightnode)
+                (rightmost_node(leftnode))->right=rightnode;
+            
+            //convert leftnode to rightnode and make leftnode as null
+            root->right=leftnode;
+            root->left=NULL;
+        }
+        //If leftnode doesn't exists, then just move to the rightnode
+        root=root->right;
+    }
+    
+    return head;
+}
