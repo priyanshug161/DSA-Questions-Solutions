@@ -1,0 +1,29 @@
+vector<vector<int> > Solution::zigzagLevelOrder(TreeNode* A) {
+    TreeNode *b=A;
+    vector<vector<int>> ans;
+    vector<int> a;
+    if(A==NULL)return ans;
+    queue<TreeNode *> q;
+    q.push(A);
+    //level=flase (left to right)
+    bool level=false;
+    while(!q.empty()){
+        int size=q.size();
+        //push an empty vector to modify later
+        if(size)ans.push_back(a);
+        while(size){
+            b=q.front();
+            q.pop();
+            if(b->left)q.push(b->left);
+            if(b->right)q.push(b->right);
+            size--;
+            ans[ans.size()-1].push_back(b->val);
+        }
+        if(level){
+            reverse(ans[ans.size()-1].begin(),ans[ans.size()-1].end());
+            level=false;
+        }
+        else level=true;
+    }
+    return ans;
+}

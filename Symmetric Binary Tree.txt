@@ -1,0 +1,20 @@
+bool isMirror(TreeNode* root1, TreeNode* root2)
+{
+// If both trees are empty,
+// then they are mirror images
+    if (root1 == NULL && root2 == NULL)
+        return true;
+    
+    if (root1 && root2 && root1->val == root2->val)
+        return isMirror(root1->left, root2->right)
+               && isMirror(root1->right, root2->left);
+    
+    return false;
+}
+int Solution::isSymmetric(TreeNode* A) {
+
+    if(isMirror(A,A))
+        return 1;
+    else
+    return 0;
+}

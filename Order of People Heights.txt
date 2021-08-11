@@ -1,0 +1,18 @@
+//Not used segment trees
+vector<int> Solution::order(vector<int> &A, vector<int> &B) {
+    vector<int> ans;
+    vector<pair<int,int>> vp;
+    for(int i=0;i<A.size();i++)
+    {
+        vp.push_back(make_pair(A[i],B[i]));
+        
+    }
+    //Sort in descending order of height
+    sort(vp.rbegin(),vp.rend());
+    for(int i=0;i<vp.size();i++)
+    {
+        //Insert function pushes existing elements forwards intead of replacing them
+        ans.insert(ans.begin()+vp[i].second, vp[i].first);
+    }
+    return ans;
+}
