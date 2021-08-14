@@ -1,0 +1,51 @@
+//This function determines the number of nodes connected to a particular node
+void helper(unordered_map<int,vector<int>>&m,vector<bool>&vis,int curr,int &ans)
+{
+    vis[curr]=true;
+    ans++;
+    for(auto it:m[curr])
+    {
+        if(!vis[it])
+        {
+            helper(m,vis,it,ans);
+        }
+    }
+}
+//This function determines at max how many edges can be removed. The logic is
+//if any node including itself is having even number of descendants then the
+// edge between this node and it's parent node can be removed safely.
+void dfs(unordered_map<int,vector<int>>&m,vector<bool>&vis,vector<int>&count,int curr,int &edge)
+{
+    vis[curr]=true;
+    for(auto it:m[curr])
+    {
+        if(!vis[it])
+        {
+            if(count[it]>0 && count[it]%2==0)
+            {
+                edge++;
+            }
+            dfs(m,vis,count,it,edge);
+        }
+    }
+}
+int Solution::solve(int A, vector<vector<int> > &B)
+{
+    vector<int> count(A+1);// This vector keeps the track how many nodes are connected to a particular node
+    unordered_map<int,vector<int>> m;// The adjacency list of the graph
+    for(auto it:B)
+    {
+        m[it[0]].push_back(it[1]);
+    }
+    for(int i=1;i<=A;i++)// Filling up of count vector
+    {
+        vector<bool> vis(A+1,false);
+        int ans=0;
+        helper(m,vis,i,ans);
+        count[i]=ans;
+    }
+    vector<bool>vis(A+1,false);
+    int edge=0;
+    dfs(m,vis,count,1,edge);
+    return edge;
+}
