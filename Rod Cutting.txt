@@ -1,0 +1,61 @@
+vector<int> ans;
+//This function finds order of cuts to cut a rod from point l to r with min cost (given pa vector)
+void find_ans(vector<vector<int>> pa, int l, int r)
+{
+    if(pa[l][r] == -1) return;
+    else
+    {
+        ans.push_back(pa[l][r]);
+        find_ans(pa, l, pa[l][r]);
+        find_ans(pa, pa[l][r], r);
+    }
+}
+
+vector<int> Solution::rodCut(int A, vector<int> &B) {
+    int m = B.size();
+    ans.clear();
+    //B1 stores coordinates of rod (including all cut points, 0, end of rod)
+    vector<int> B1(m+2);
+    B1[0] = 0; B1[m+1] = A;
+    for(int i = 0; i<m; i++) B1[i+1] = B[i];
+
+    //dp stores min cost to cut rod from point i to j
+    //pa stores point(k) to cut rod from point i to j such that we get min cost
+    vector<vector<int>> dp(m+2, vector<int>(m+2, INT_MAX)), pa(m+2, vector<int>(m+2, -1));
+    for(int i = m+1; i>=0; i--)
+    {
+        for(int j = 0; j<m+2; j++)
+        {
+            //if length of rod is 0 then cost to cut it is 0
+            if(i == j)
+            {
+                dp[i][j] = 0;
+                continue;
+            }
+            //start point can't be greater than end point
+            if(i>j) continue;
+            //cost is length of the rod
+            int cost = B1[j] - B1[i];
+            
+            //This loop is to determine the cut point
+            for(int k = i+1; k<j; k++)
+            {
+                //if we get min cost then update pa vector
+                if(dp[i][j] > dp[i][k] + dp[k][j] + cost)
+                {
+                    dp[i][j] = dp[i][k] + dp[k][j] + cost;
+                    pa[i][j] = k;
+                }
+            }
+        }
+    }
+    
+    find_ans(pa, 0, m+1);
+    vector<int> final_ans(m);
+    //final ans will be the values from B vector (ans vector has only coordinates)
+    for(int i = 0; i<m; i++)
+    {
+        final_ans[i] = B[ans[i]-1];
+    }
+    return final_ans;
+}
