@@ -1,0 +1,20 @@
+int Solution::candy(vector<int> &A) 
+{
+    vector<int> Fnum_candy(A.size(),1),Bnum_candy(A.size(),1);
+    for(int i=1;i<A.size();i++){
+        if(A[i]>A[i-1]){
+            Fnum_candy[i]=Fnum_candy[i-1] + 1 ;
+        }
+    }
+    for(int i=A.size()-1;i>0;i--){
+        if(A[i-1]>A[i]){
+            Bnum_candy[i-1]=Bnum_candy[i] + 1 ;
+        }
+    }
+    int tcandy=0;
+    for(int i=0;i<A.size();i++)
+    {
+        tcandy += max(Fnum_candy[i],Bnum_candy[i]);
+    }
+    return tcandy;
+}

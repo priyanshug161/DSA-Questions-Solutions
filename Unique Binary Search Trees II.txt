@@ -1,0 +1,21 @@
+int static dp[19];
+
+int solve(int A){
+    if(dp[A]!=-1){
+        return dp[A];
+    }
+    int ans=0;
+    for(int i=1;i<=A;i++){
+        int l=solve(i-1);
+        int r=solve(A-i);
+        ans+=(l*r);
+    }
+    return dp[A]=ans;
+}
+int Solution::numTrees(int A) {
+    memset(dp,-1,sizeof(dp));
+    dp[0]=1;
+    dp[1]=1;
+    
+    return solve(A);
+}

@@ -1,0 +1,38 @@
+bool ispal(string s, int i, int j){
+    while(i<j){
+        if(s[i]!=s[j]){
+            return false;
+        }
+        i++;
+        j--;
+    }
+    return true;
+}
+
+int solve(string str,int i, int j, vector<vector<int>> &rec){
+    //if(i>=j){
+    //    return 0;
+    //}
+    if(rec[i][j]!=-1){
+        return rec[i][j];
+    }
+    else if(ispal(str,i,j)){
+        return 0;
+    }
+
+    int ans=j-i+1;
+    for(int k=i;k<j;k++){
+        int left= (rec[i][k]==-1 ? solve(str,i,k,rec) : rec[i][k]);
+        int right=(rec[k+1][j]==-1 ? solve(str,k+1,j,rec) : rec[k+1][j]);
+        int temp=left+right+1;
+        ans=min(temp,ans);
+    }
+    
+    rec[i][j]=ans;
+    return ans;
+}
+
+int Solution::minCut(string A) {
+    vector<vector<int>> rec(A.size(),vector<int> (A.size(),-1));
+    return solve(A,0,A.size()-1, rec);
+}
