@@ -1,0 +1,18 @@
+int check(TreeNode* A,int count)
+ {
+    if(A==NULL)
+        return count;
+   int left_deep=check(A->left,count+1);
+   int right_deep=check(A->right,count+1);
+   return max(left_deep,right_deep);
+ }
+int Solution::maxDepth(TreeNode* A) {
+    if(A==NULL)
+        return 0;
+    else if(A->left==NULL && A->right==NULL)
+        return 1;
+    int L_count=1,R_count=1;
+    int left=check(A->left,L_count);
+    int right=check(A->right,R_count);
+    return max(left,right);
+}

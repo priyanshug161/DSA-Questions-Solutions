@@ -1,0 +1,38 @@
+static void dijkstra(int source, int A, const vector<vector<pair<int, int>>> &graph, vector<int> &distance) {
+    vector<bool> processed(A + 1, false);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> q;    // min heap
+    q.push({distance[source], source});
+    while (!q.empty()) {
+        int node = q.top().second;
+        q.pop();
+        if (processed[node]) continue; // stale node in queue
+        for (auto &link : graph[node]) {
+            if (distance[node] + link.second < distance[link.first]) {
+                distance[link.first] = distance[node] + link.second;
+                q.push({distance[link.first], link.first});
+            }
+        }
+        processed[node] = true;
+    }
+}
+ 
+int Solution::solve(int A, vector<vector<int> > &B, int C, int D, vector<vector<int> > &E) {
+    vector<int> sourceDistance(A + 1, INT_MAX), destinationDistance(A + 1, INT_MAX);
+    sourceDistance[C] = 0, destinationDistance[D] = 0;
+    vector<vector<pair<int, int>>> graphA(A + 1), graphB(A + 1);
+    //Taking edges as bidirectional
+    for (auto &edge : B) {
+        graphA[edge[0]].push_back({edge[1], edge[2]});
+        graphB[edge[1]].push_back({edge[0], edge[2]});
+    }
+    dijkstra(C, A, graphA, sourceDistance);         // dijkstra on source node
+    dijkstra(D, A, graphB, destinationDistance);    // dijkstra on destination node
+    int minDistance = sourceDistance[D];
+    for (auto &edge : E) {
+        if (sourceDistance[edge[0]] != INT_MAX and destinationDistance[edge[1]] != INT_MAX) // to be considered only if reachable
+            minDistance = min(minDistance, sourceDistance[edge[0]] + edge[2] + destinationDistance[edge[1]]);
+        if (sourceDistance[edge[1]] != INT_MAX and destinationDistance[edge[0]] != INT_MAX) // to be considered only if reachable
+            minDistance = min(minDistance, sourceDistance[edge[1]] + edge[2] + destinationDistance[edge[0]]);
+    }
+    return minDistance == INT_MAX ? -1 : minDistance;   // check if unreachable
+}
