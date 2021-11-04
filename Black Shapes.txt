@@ -1,0 +1,27 @@
+bool check(vector<string> &A, int i, int j, vector<vector<bool>> &visited){
+    if(i<0 || i>=A.size() || j<0 || j>=A[0].size()) return false;
+    
+    if(visited[i][j]) return false;
+    visited[i][j]=true;  
+    if(A[i][j]=='O') return false;
+
+    check(A,i-1,j,visited);
+    check(A,i+1,j,visited);
+    check(A,i,j-1,visited);
+    check(A,i,j+1,visited);
+
+    return true;
+}
+
+int Solution::black(vector<string> &A) {
+    vector<vector<bool>> visited(A.size(),vector(A[0].size(),false));
+    int count=0;
+    for(int i=0;i<A.size();i++){
+        for(int j=0;j<A[0].size();j++){
+            if(check(A,i,j,visited)){
+                count++;
+            }
+        }
+    }
+    return count;    
+}

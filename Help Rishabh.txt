@@ -1,0 +1,29 @@
+int help(vector<int> &A, int B){
+    int c_occ[100001]={0};
+    int n=A.size();
+    int ans=0;
+    int occ=0;
+    int r=-1;
+    for(int l=0;l<n;l++){
+        while(r+1<n){
+            if(c_occ[A[r+1]]==1 && occ==B){
+                break;
+            }
+            r++;
+            c_occ[A[r]]++;
+            if(c_occ[A[r]]==2){
+                occ++;
+            }
+        }
+        ans+=(r-l+1);
+        c_occ[A[l]]--;
+        if(c_occ[A[l]]==1){
+            occ--;
+        }
+    }    
+    return ans;
+}
+
+int Solution::solve(vector<int> &A, int B) {
+    return help(A,B)-help(A,B-1);
+}

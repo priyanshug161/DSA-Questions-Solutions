@@ -1,0 +1,10 @@
+int Solution::majorityElement(const vector<int> &A) {
+    int comp=floor(A.size()/2);
+    unordered_map<int,int> mp;
+    for(auto a : A){
+        mp[a]++;
+        if(mp[a]>comp){
+            return a;
+        }
+    }
+}

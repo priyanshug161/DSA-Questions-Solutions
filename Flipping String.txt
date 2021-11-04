@@ -1,0 +1,22 @@
+int Solution::solve(string A) {
+    vector<pair<int,int>> v;
+    int i=0,j=0;
+    while(i<A.size()){
+        if(A[i]==A[j] && j<A.size())
+            j++;
+        else{
+            v.push_back({A[i]-'0',j-i});
+            i=j;
+        }
+    }
+    int ans=0;
+    for(int i=0; i<v.size();i++){
+        if(v[i].first){
+            ans=max(ans,v[i].second);
+        }
+        else{
+            ans=max(ans,v[i].second+ (i ? v[i-1].second : 0) + (i<v.size()-1 ? v[i+1].second : 0));
+        }
+    }
+    return ans;
+}

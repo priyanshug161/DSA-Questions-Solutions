@@ -1,0 +1,18 @@
+int Solution::minimize(const vector<int> &A, const vector<int> &B, const vector<int> &C) {
+    int i=0, j=0, k=0;
+    int x=A.size(), y=B.size(), z=C.size();
+    int ans=INT_MAX;
+    while(i<x && j<y && k<z){
+        ans=min(ans,max(abs(A[i] - B[j]), max(abs(B[j] - C[k]), abs(C[k] - A[i]))));
+        if(A[i]<=B[j] && A[i]<=C[k] && i<x){
+            i++;
+        }
+        else if(B[j]<=C[k] && j<y){
+            j++;
+        }
+        else if(k<z){
+            k++;
+        }
+    }
+    return ans;
+}

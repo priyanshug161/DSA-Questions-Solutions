@@ -1,0 +1,37 @@
+bool check(int mid, map<int, vector<int>> &mp, int &B){
+    int g_sum=0;
+    for(auto i:mp){
+        int currsum=0;
+        for(auto j : i.second){
+            if(currsum + j>mid){
+                break;
+            }
+            currsum+=j;
+        }
+        g_sum+=currsum;
+    }
+    if(g_sum<=B)
+        return true;
+    else
+        return false;
+}
+int Solution::solve(vector<vector<int> > &A, int B) {
+    map<int, vector<int>> mp;
+    for(auto a : A){
+        mp[a[0]].push_back(a[1]);
+    }
+    int ans=0;
+    int low=0;
+    int high=1000000000;
+    while(low<=high){
+        int mid=(low+high)/2;
+        if(check(mid,mp,B)){
+            ans=mid;
+            low=mid+1;
+        }
+        else{
+            high=mid-1;
+        }
+    }
+    return ans;
+}

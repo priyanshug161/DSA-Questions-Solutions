@@ -1,0 +1,22 @@
+int Solution::maxProduct(const vector<int> &A) 
+{
+    if(A.empty())
+    {
+        return 0;
+    }
+    if(A.size()==1)
+    {
+        return A[0];
+    }
+    int ans=INT_MIN,choice1,choice2,max_p=A[0],min_p=A[0];
+    for(int i=1;i<A.size();i++)
+    {
+        //Max product can also be the current number multiplied by the min till last number
+        choice1=max_p*A[i];
+        choice2=min_p*A[i];
+        max_p=max(A[i],max(choice1,choice2));
+        min_p=min(A[i],min(choice1,choice2));
+        ans=max(ans,max_p);
+    }
+    return ans;
+}

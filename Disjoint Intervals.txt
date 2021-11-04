@@ -1,0 +1,23 @@
+int Solution::solve(vector<vector<int> > &A) {
+    sort(A.begin(),A.end());
+    int i=0, j=1;
+    int count=A.size();
+    int rem=0;
+    while(j<A.size()){
+        if(A[i][1]>=A[j][0] && A[i][1]<A[j][1]){ //Part Overlap
+            rem++;
+            j++;
+        }
+        else if(A[i][1]>=A[j][0] && A[i][1]>=A[j][1]){ //Full Overlap
+            rem++;
+            i=j;
+            j++;
+        }
+        else if(A[i][1]<A[j][0]){ //Disjoint
+            i=j;
+            j++;
+        }
+        
+    }
+    return count-rem;
+}

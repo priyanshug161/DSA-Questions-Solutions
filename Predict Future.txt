@@ -1,0 +1,29 @@
+const int mod = 1000000007;
+
+#define ll long long
+ll mpower(ll x, ll n)
+{
+    if (n == 0)
+        return 1LL;
+    else if (n % 2 == 0)
+        return mpower((x *x) % mod, n / 2);
+    else
+        return (x* mpower((x *x) % mod, (n - 1) / 2)) % mod;
+}
+vector<int> Solution::solve(int A, int B, int C)
+{
+    ll fact = mpower(5LL, C / 2);
+    ll val1 = ((fact % mod) *(A % mod)) % mod;
+    ll val2 = ((fact % mod) *(B % mod)) % mod;
+    if (C % 2)
+    {
+        ll temp1 = val1;
+        ll temp2 = val2;
+        val1 = ((temp2 % mod) - (((2 % mod) *(temp1 % mod)) % mod) + mod) % mod;
+        val2 = ((((2 % mod) *(temp2 % mod)) % mod) + (temp1 % mod)) % mod;
+    }
+    vector<int> ans;
+    ans.push_back(val1);
+    ans.push_back(val2);
+    return ans;
+}
