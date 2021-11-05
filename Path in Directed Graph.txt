@@ -1,0 +1,59 @@
+int Solution::solve(int A, vector<vector<int> > &B) {
+    map<int,vector<int>> mp;
+    for(auto i:B){
+        mp[i[0]].push_back(i[1]);
+    }
+    vector<bool> visited(A+1,false);
+    queue<int> q;
+ 
+    q.push(1);
+    visited[1]=true;
+ 
+    while(!q.empty()){
+        int top=q.front();
+        q.pop();
+        if(top==A){
+            return 1;
+        }
+        for(int j=0;j<mp[top].size();j++){
+            if(!visited[mp[top][j]]){
+                q.push(mp[top][j]);
+                visited[mp[top][j]]=true;
+            }
+        }
+    }
+    return 0;
+}
+
+
+
+//.....Backtracking approach (By Rishabh)
+
+bool path(int A, map<int,vector<int>> &mp,vector<int> &v,int P)
+{
+    if(P==A) return 1;
+    
+    if(v[P]==0)
+    {
+        v[P]=1;
+        for(int i=0;i<mp[P].size();i++)
+        {
+            bool node=path(A,mp,v,mp[P][i]);
+            if(node==1) return 1;
+        }
+        v[P]=0;
+        return 0;
+    }
+    return 0;
+}
+
+int Solution::solve(int A, vector<vector<int> > &B) 
+{
+    map<int,vector<int>> mp;
+    for(int i=0;i<B.size();i++)
+    {
+        mp[B[i][0]].push_back(B[i][1]);
+    }
+    vector<int> v(A+1,0);
+    return path(A,mp,v,1);
+}
