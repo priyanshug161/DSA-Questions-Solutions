@@ -1,0 +1,38 @@
+//https://leetcode.com/problems/is-graph-bipartite/
+
+class Solution {
+public:
+    
+    bool checkBipartite(vector<vector<int>>& graph, vector<int> &color){
+        queue<int> q;
+        
+        while(true){
+            while(!q.empty()){
+                int curr=q.front();
+                q.pop();
+                for(auto t : graph[curr]){
+                    if(color[t]==-1){
+                        color[t]=1-color[curr];
+                        q.push(t);
+                    }
+                    else{
+                        if(color[t]==color[curr]) return false;
+                    }
+                }
+            }
+            
+            //For unconnected nodes
+            auto ind=find(color.begin(), color.end(), -1);
+            if(ind==color.end()) break;
+            color[ind-color.begin()]=0;
+            q.push(ind-color.begin());
+        }
+        return true;
+    }
+    
+    bool isBipartite(vector<vector<int>>& graph) {
+        if(graph.size()==1 || graph.size()==0) return true;
+        vector<int> color(graph.size(),-1);
+        return checkBipartite(graph,color);
+    }
+};
