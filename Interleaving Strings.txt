@@ -1,0 +1,29 @@
+int Solution::isInterleave(string A, string B, string C) {
+    int m=A.size()+1;
+    int n=B.size()+1;
+    int dp[m][n];
+    dp[0][0]=1; //Empty string will always match
+    for(int i=1;i<m;i++){  //If B is empty then check for A (0th column)
+        if(A[i-1]==C[i-1] && dp[i-1][0]==1)
+            dp[i][0]=1;
+        else
+            dp[i][0]=0;
+    }
+    for(int j=1;j<n;j++){ //If A is empty then check for B (0th row)
+        if(B[j-1]==C[j-1] && dp[0][j-1]==1)
+            dp[0][j]=1;
+        else
+            dp[0][j]=0;
+    }
+    for(int i=1;i<m;i++){ //(char of C= row_number + col_number)
+        for(int j=1;j<n;j++){ 
+            if((C[i+j-1]==A[i-1] || C[i+j-1]==B[j-1]) && (dp[i-1][j] || dp[i][j-1])){
+                dp[i][j]=1;
+            }
+            else{
+                dp[i][j]=0;
+            }
+        }
+    }
+    return dp[m-1][n-1];
+}

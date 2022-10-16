@@ -1,0 +1,81 @@
+#include <iostream>
+using namespace std;
+#include <bits/stdc++.h>
+
+struct dir{
+	bool left, right, up, down;
+	dir() : left(false), right(false), up(false), down(false){}
+};
+
+struct triple{
+	int row, col, len;
+};
+
+void solve(int N, int M, int R, int C, int L, vector<vector<dir>> mat){
+	int count=0;
+	vector<vector<bool>> vis(N, vector<bool>(M, false));
+	queue<triple> q;
+
+	if(mat[R][C].up || mat[R][C].down || mat[R][C].left || mat[R][C].right)
+		q.push({R,C,L});
+	
+	while(!q.empty()){
+		triple t=q.front();
+		q.pop();
+		//Length 0
+		if(t.len==0 || vis[t.row][t.col]) continue;
+		count++;
+		vis[t.row][t.col]=true;
+		
+		//Up condition
+		if((t.row-1)>=0 && mat[t.row][t.col].up && mat[t.row-1][t.col].down)
+			q.push({t.row-1,t.col,t.len-1});
+		//Down condition
+		if((t.row+1)<N && mat[t.row][t.col].down && mat[t.row+1][t.col].up)
+			q.push({t.row+1,t.col,t.len-1});
+		//Left condition
+		if((t.col-1)>=0 && mat[t.row][t.col].left && mat[t.row][t.col-1].right)
+			q.push({t.row,t.col-1,t.len-1});	
+		//Right condition
+		if((t.col+1)<M && mat[t.row][t.col].right && mat[t.row][t.col+1].left)
+			q.push({t.row,t.col+1,t.len-1});
+			
+	}
+	
+	cout<<count;
+}
+
+int main() {
+	int T;
+	cin>>T;
+	while(T--){
+		int N, M, R, C, L;
+		cin>>N>>M>>R>>C>>L;
+		vector<vector<dir>> mat(N, vector<dir>(M));
+		for(int i=0;i<N;i++){
+			for(int j=0;j<M;j++){
+				int temp;
+				cin>>temp;
+				//Up condition
+				if(temp==1 || temp==2 || temp==4 || temp==7){
+					mat[i][j].up=true;
+				}
+				//Down condition
+				if(temp==1 || temp==2 || temp==5 || temp==6){
+					mat[i][j].down=true;
+				}
+				//Left condition
+				if(temp==1 || temp==3 || temp==6 || temp==7){
+					mat[i][j].left=true;
+				}
+				//Right condition
+				if(temp==1 || temp==3 || temp==4 || temp==5){
+					mat[i][j].right=true;
+				}
+			}
+		}
+		solve(N, M, R, C, L, mat);
+		cout<<endl;
+	}
+	return 0;
+}

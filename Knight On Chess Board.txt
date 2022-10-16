@@ -1,0 +1,36 @@
+int Solution::knight(int A, int B, int C, int D, int E, int F) {
+    vector<vector<bool>> processed(A+1,vector<bool>(B+1,false));
+    vector<vector<int>> Distance(A+1, vector<int>(B+1,INT_MAX-2));
+    int dx[8]={-2,-1,1,2,2,1,-1,-2}; // the eight moves of knight in dx and dy together
+    int dy[8]={-1,-2,-2,-1,1,2,2,1};
+    
+    priority_queue<pair<int,pair<int,int>>, vector<pair<int, pair<int,int>>>, greater<>> q;
+    Distance[C][D]=0;
+    q.push({0,{C,D}});
+    while(!q.empty()){
+        pair<int,int> node=q.top().second;
+        q.pop();
+        if(processed[node.first][node.second]) continue;
+        for(int i=0;i<8;i++){
+            int x=node.first+dx[i];
+            int y=node.second+dy[i];
+            
+            if(x>=1 && y>=1 && x<=A && y<=B && Distance[node.first][node.second]+1<Distance[x][y]){
+                
+                Distance[x][y]=Distance[node.first][node.second]+1;
+                q.push({Distance[x][y], {x,y}});
+                
+            }
+        }
+        processed[node.first][node.second] = true;
+    }
+    
+    
+    if(Distance[E][F]==INT_MAX-2){
+        return -1;
+    }
+    else{
+        return Distance[E][F];
+    }
+    
+}
