@@ -1,0 +1,86 @@
+//https://www.codingninjas.com/codestudio/problems/minimum-time-in-wormhole-network_630527
+
+#include<bits/stdc++.h>
+/******************************************************************
+
+    Following is the structure of the Wormhole class:
+
+    class Wormhole
+    {
+    public:
+        int startX, startY, endX, endY, cost;
+    };
+
+*******************************************************************/
+struct data{
+    int dir;
+    Wormhole w;
+    vector<bool> visited;
+    int time;
+    data() : dir(1), visited(200,false){}
+};
+
+int minTimeInWormholeNetwork(int n, int sx, int sy, int dx, int dy, Wormhole* wormhole)
+{
+    queue<data> q;
+    int min_time=abs(dy-sy)+abs(dx-sx);
+    
+    //pushing all nodes in queue
+    for(int i=0;i<n;i++){
+        data temp;
+        //from entry to exit
+        temp.dir=1;
+        temp.w=wormhole[i];
+        temp.visited[i]=true;
+        temp.time=(abs(wormhole[i].startX-sx)+abs(wormhole[i].startY-sy)+wormhole[i].cost);
+        if(temp.time < min_time)
+            q.push(temp);
+        
+        //from exit to entry
+        temp.dir=0;
+        temp.time=(abs(wormhole[i].endX-sx)+abs(wormhole[i].endY-sy)+wormhole[i].cost);
+        if(temp.time < min_time)
+            q.push(temp);
+    }
+    
+    while(!q.empty()){
+        data t=q.front();
+        q.pop();
+        
+        int dest_time;
+        if(t.dir) dest_time=t.time+abs(t.w.endX-dx)+abs(t.w.endY-dy);
+        else dest_time=t.time+abs(t.w.startX-dx)+abs(t.w.startY-dy);
+        
+        //Update answer
+        if(dest_time < min_time) min_time=dest_time;
+        
+        data t_push=t;
+        for(int j=0;j<n;j++){
+            //dir=1
+            if(!t.visited[j]){
+                t_push.dir=1;
+                t_push.w=wormhole[j];
+                t_push.visited=t.visited;
+                t_push.visited[j]=true;
+                int d;
+                if(t.dir) d=(abs(t.w.endX-t_push.w.startX)+abs(t.w.endY-t_push.w.startY));
+                else d=(abs(t.w.startX-t_push.w.startX)+abs(t.w.startY-t_push.w.startY));
+                
+                t_push.time=t.time+d+wormhole[j].cost;
+                if(t_push.time < min_time)
+                    q.push(t_push);
+            
+            //dir=0
+                t_push.dir=0;
+                if(t.dir) d=(abs(t.w.endX-t_push.w.endX)+abs(t.w.endY-t_push.w.endY));
+                else d=(abs(t.w.startX-t_push.w.endX)+abs(t.w.startY-t_push.w.endY));
+                
+                t_push.time=t.time+d+wormhole[j].cost;
+                if(t_push.time < min_time)
+                    q.push(t_push);
+            }
+        }
+    }
+    
+    return min_time;
+}
